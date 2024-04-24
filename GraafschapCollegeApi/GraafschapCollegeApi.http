@@ -1,0 +1,6 @@
+@GraafschapCollegeApi_HostAddress = http://localhost:5017
+
+GET {{GraafschapCollegeApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
