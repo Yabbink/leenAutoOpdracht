@@ -5,7 +5,9 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{543F3A87-8D48-40CC-AC52-8E6AAC6F207F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraafschapCollegeApi", "GraafschapCollegeApi\GraafschapCollegeApi.csproj", "{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraafschapCollegeApi", "GraafschapCollegeApi\GraafschapCollegeApi.csproj", "{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraafschapCollege.Shared", "GraafschapCollege.Shared\GraafschapCollege.Shared.csproj", "{73EB8C9D-FC21-40D4-91A4-031AE19E195F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +19,17 @@ Global
 		{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73EB8C9D-FC21-40D4-91A4-031AE19E195F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73EB8C9D-FC21-40D4-91A4-031AE19E195F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73EB8C9D-FC21-40D4-91A4-031AE19E195F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73EB8C9D-FC21-40D4-91A4-031AE19E195F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A2EA41A7-CF42-4842-B85C-8F7BA2B81CE7} = {543F3A87-8D48-40CC-AC52-8E6AAC6F207F}
+		{73EB8C9D-FC21-40D4-91A4-031AE19E195F} = {543F3A87-8D48-40CC-AC52-8E6AAC6F207F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A5EFB9C1-4678-4E03-911A-413A40471FDE}

@@ -1,4 +1,4 @@
-﻿namespace GraafschapCollegeApi.Models
+﻿namespace GraafschapCollege.Shared
 {
     public class UserDto
     {
