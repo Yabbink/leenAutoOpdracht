@@ -3,15 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace GraafschapCollege.Shared.Requests
 {
-    internal class CreateUserRequest
+    public partial class CreateUserRequest
     {
-        public string name { get; set;}
-        public string email { get; set;}
-        public string password { get; set;}
-        public string repeatPassword { get; set;}
-        public List<string> roles { get; set;} 
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Password must contain at least one uppercase letter, 
+        /// one lowercase letter, one number, one special character, and be between 8 and 15 characters long.
+        /// </summary>
+        [Required]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare("Password")]
+        public string RepeatPassword { get; set; }
+
+        public List<string> Roles { get; set; }
     }
 }
