@@ -1,6 +1,9 @@
-﻿namespace GraafschapCollegeApi.Seeders
+﻿using GraafschapCollegeApi.Context;
+
+namespace GraafschapCollegeApi.Seeders
 {
-    public class Seeder
+    public static class Seeder
     {
+        
     }
 }

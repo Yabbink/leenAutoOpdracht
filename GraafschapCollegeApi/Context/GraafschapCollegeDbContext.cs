@@ -1,8 +1,8 @@
-﻿namespace GraafschapCollegeApi.Context
-{
-    using GraafschapCollegeApi.Entities;
-    using Microsoft.EntityFrameworkCore;
+﻿using GraafschapCollegeApi.Entities;
+using Microsoft.EntityFrameworkCore;
 
+namespace GraafschapCollegeApi.Context
+{
     public class GraafschapCollegeDbContext(DbContextOptions<GraafschapCollegeDbContext> options)
         : DbContext(options)
     {
