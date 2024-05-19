@@ -1,11 +1,10 @@
-﻿namespace GraafschapCollegeApi.Services
+﻿using GraafschapCollegeApi.Context;
+using Microsoft.EntityFrameworkCore;
+using GraafschapCollege.Shared.Requests;
+using GraafschapCollege.Shared.Responses;
+
+namespace GraafschapCollegeApi.Services
 {
-    using GraafschapCollegeApi.Context;
-    using GraafschapCollege.Shared.Requests;
-    using GraafschapCollege.Shared.Responses;
-
-    using Microsoft.EntityFrameworkCore;
-
     public class AuthService(GraafschapCollegeDbContext dbContext, TokenService tokenService)
     {
         public AuthResponse? Login(LoginRequest request)
@@ -26,11 +25,6 @@
                 Email = user.Email,
                 Token = tokenService.CreateToken(user)
             };
-        }
-
-        internal object Login(Microsoft.AspNetCore.Identity.Data.LoginRequest request)
-        {
-            throw new NotImplementedException();
         }
     }
 }

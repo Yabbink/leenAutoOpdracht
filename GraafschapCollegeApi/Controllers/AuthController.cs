@@ -1,7 +1,7 @@
 ﻿using GraafschapCollegeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
+using GraafschapCollege.Shared.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraafschapCollegeApi.Controllers

@@ -1,12 +1,12 @@
-﻿using GraafschapCollegeApi.Models;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using GraafschapCollegeApi.Entities;
 using System.Text;
 
-namespace GraafschapCollegeApi.Services
+namespace GraafschapCollegeApi
 {
-    public class TokenService
+    public class TokenService(IConfiguration configuration)
     {
         private readonly SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
 

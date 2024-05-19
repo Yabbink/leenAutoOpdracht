@@ -1,5 +1,7 @@
 using GraafschapCollege.Shared;
+using GraafschapCollege.Shared.Constants;
 using GraafschapCollegeApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraafschapCollegeApi.Controllers
@@ -35,6 +37,13 @@ namespace GraafschapCollegeApi.Controllers
         {
             Users.Add(user);
             return Ok();
+        }
+
+        [Authorize(Roles = Roles.Administrator)]
+        [HttpGet("secret")]
+        public IActionResult Secret()
+        {
+            return Ok("This is a secret message");
         }
     }
 }
