@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraafschapCollegeApi.Migrations
 {
     [DbContext(typeof(GraafschapCollegeDbContext))]
-    [Migration("20240515074115_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240521111820_Initialize")]
+    partial class Initialize
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace GraafschapCollegeApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("GraafschapCollegeApi.Entities.User", b =>
@@ -53,6 +53,9 @@ namespace GraafschapCollegeApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
