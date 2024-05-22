@@ -5,7 +5,7 @@
 namespace GraafschapCollegeApi.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateRolesDesigner : Migration
+    public partial class Initialize : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
