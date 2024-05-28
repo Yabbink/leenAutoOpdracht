@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraafschapCollegeApi.Migrations
 {
     [DbContext(typeof(GraafschapCollegeDbContext))]
-    [Migration("20240521111820_Initialize")]
-    partial class Initialize
+    [Migration("20240528103959_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
             modelBuilder.Entity("GraafschapCollegeApi.Entities.Role", b =>
                 {

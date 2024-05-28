@@ -1,6 +1,8 @@
 using GraafschapCollege.Shared;
 using GraafschapCollege.Shared.Constants;
+using GraafschapCollege.Shared.Requests;
 using GraafschapCollegeApi.Models;
+using GraafschapCollegeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,35 +10,47 @@ namespace GraafschapCollegeApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserController(UserService userService) : ControllerBase
     {
-        public static List<User> Users = new List<User>
-        {
-            new User
-            {
-                name = "John Doe",
-                email = "johndoe@gmail.com",
-                password = "password123"
-            },
-        };
-
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetUsers()
         {
-            var userDtos = Users.Select(user => new UserDto
-            {
-                name = user.name,
-                email = user.email
-            });
+            var users = userService.GetUsers();
+            return Ok(users);
+        }
 
-            return Ok(userDtos);
+        [HttpGet("{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var response = userService.GetUserById(id);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] User user)
+        public IActionResult CreateUser(CreateUserRequest request)
         {
-            Users.Add(user);
-            return Ok();
+            var response = userService.CreateUser(request);
+
+            return CreatedAtAction(nameof(CreateUser), new { id = response.Id }, response);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser(int id, UpdateUserRequest user)
+        {
+            var updatedUser = userService.UpdateUser(id, user);
+
+            if (updatedUser == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedUser);
         }
 
         [Authorize(Roles = Roles.Administrator)]

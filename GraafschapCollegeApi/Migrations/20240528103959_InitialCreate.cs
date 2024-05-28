@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore.Migrations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -71,16 +69,16 @@ namespace GraafschapCollegeApi.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
-            table: "Users",
-            column: "Email",
-            unique: true);
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-            name: "RoleUser");
+                name: "RoleUser");
 
             migrationBuilder.DropTable(
                 name: "Roles");

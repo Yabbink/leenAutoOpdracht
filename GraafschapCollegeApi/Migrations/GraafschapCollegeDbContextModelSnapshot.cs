@@ -14,7 +14,7 @@ namespace GraafschapCollegeApi.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
             modelBuilder.Entity("GraafschapCollegeApi.Entities.Role", b =>
                 {

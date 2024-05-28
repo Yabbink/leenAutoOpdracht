@@ -33,7 +33,8 @@ namespace GraafschapCollegeApi
 
             services.AddDbContext<GraafschapCollegeDbContext>(options =>
             {
-                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+                var a = builder.Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlite("Data Source=GraafschapCollege.db;");
             });
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

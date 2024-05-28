@@ -17,21 +17,21 @@ namespace GraafschapCollegeApi.Seeders
 
             var users = new List<User>
             {
-            new()
-            {
-                Name = "Bryan Schoot",
-                Email = "b.schoot@example.com",
-                Password =  BCrypt.Net.BCrypt.HashPassword("Password123!"),
-                Roles = [roles.Find(x => x.Name == Roles.Administrator)!]
-            },
-            new()
-            {
-                Name = "John Doe",
-                Email = "j.doe@example.com",
-                Password =  BCrypt.Net.BCrypt.HashPassword("Password123!"),
-                Roles = [roles.Find(x => x.Name == Roles.Employee)!]
-            }
-        };
+                new()
+                {
+                    Name = "Bryan Schoot",
+                    Email = "b.schoot@example.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Password123!"),
+                    Roles = new List<Role> { roles.Find(x => x.Name == Roles.Administrator)! }
+                },
+                new()
+                {
+                    Name = "John Doe",
+                    Email = "j.doe@example.com",
+                    Password = BCrypt.Net.BCrypt.HashPassword("Password123!"),
+                    Roles = new List<Role> { roles.Find(x => x.Name == Roles.Employee)! }
+                }
+            };
 
             var usersToAdd = users
                 .Where(x => !existingUsers.Contains(x.Email))
@@ -40,5 +40,6 @@ namespace GraafschapCollegeApi.Seeders
             dbContext.Users.AddRange(usersToAdd);
             dbContext.SaveChanges();
         }
+
     }
 }
