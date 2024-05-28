@@ -41,8 +41,6 @@ namespace GraafschapCollegeApi.Services
 
             if (existingUser != null)
             {
-                // This should be a custom exception but for now we'll just throw a regular one.
-                // Best case scenario is to create a Result object that contains error messages or a success flag.
                 throw new Exception("User already exists");
             }
 
