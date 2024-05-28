@@ -5,7 +5,7 @@ using System.Data;
 
 namespace GraafschapCollegeApi.Seeders
 {
-    public class UserSeeder
+    public static class UserSeeder
     {
         public static void Seed(GraafschapCollegeDbContext dbContext)
         {
@@ -22,14 +22,14 @@ namespace GraafschapCollegeApi.Seeders
                     Name = "Bryan Schoot",
                     Email = "b.schoot@example.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Password123!"),
-                    Roles = new List<Role> { roles.Find(x => x.Name == Roles.Administrator)! }
+                    Roles = [roles.Find(x => x.Name == Roles.Administrator)!]
                 },
                 new()
                 {
                     Name = "John Doe",
                     Email = "j.doe@example.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Password123!"),
-                    Roles = new List<Role> { roles.Find(x => x.Name == Roles.Employee)! }
+                    Roles = [roles.Find(x => x.Name == Roles.Employee)!]
                 }
             };
 
