@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraafschapCollegeApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UserController(UserService userService) : ControllerBase

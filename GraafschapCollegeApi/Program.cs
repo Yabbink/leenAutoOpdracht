@@ -1,5 +1,6 @@
 using GraafschapCollegeApi.Context;
 using GraafschapCollegeApi.Seeders;
+using GraafschapCollegeApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -17,50 +18,10 @@ namespace GraafschapCollegeApi
             var services = builder.Services;
 
             // Add services to the container.
+            services.AddControllers();
 
-            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-
-            var cfg = new ConfigurationBuilder()
-                      .SetBasePath(builder.Environment.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-            .AddEnvironmentVariables()
-            .Build();
-
-            services.AddDbContext<GraafschapCollegeDbContext>(options =>
-            {
-                var a = builder.Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlite("Data Source=GraafschapCollege.db;");
-            });
-
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-               .AddJwtBearer(options =>
-               {  
-                   options.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidateIssuer = true,
-                       ValidateAudience = true,
-                       ValidateLifetime = true,
-                       ValidateIssuerSigningKey = true,
-                       ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                       ValidAudience = builder.Configuration["Jwt:Audience"],
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-                       ClockSkew = TimeSpan.Zero
-                   };
-               });
-
-            services.AddAuthorizationBuilder()
-                 .SetFallbackPolicy(new AuthorizationPolicyBuilder()
-                 .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                 .RequireAuthenticatedUser()
-                 .Build());
-
             services.AddEndpointsApiExplorer();
-
             services.AddSwaggerGen(options =>
             {
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -72,30 +33,57 @@ namespace GraafschapCollegeApi
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
                 {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                               Type = ReferenceType.SecurityScheme,
-                               Id = "Bearer"
-                            }
-                        },
-                        Array.Empty<string>()
-                    }
-                });
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
             });
 
-            var app = builder.Build();
+            // Add services to the container.
+            services.AddTransient<UserService>();
+            services.AddTransient<AuthService>();
+            services.AddTransient<TokenService>();
 
-            using (var scope = app.Services.CreateScope())
+            // Add database context
+            services.AddDbContext<GraafschapCollegeDbContext>(options =>
             {
-                var scopedServices = scope.ServiceProvider;
-                var dbContext = scopedServices.GetRequiredService<GraafschapCollegeDbContext>();
-                dbContext.Database.Migrate();
-                dbContext.Seed();
-            }
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            // Add authentication for JWT
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            // Add authorization policy for JWT
+            services.AddAuthorizationBuilder()
+                .SetFallbackPolicy(new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser()
+                .Build());
+
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -111,6 +99,15 @@ namespace GraafschapCollegeApi
             app.UseAuthorization();
 
             app.MapControllers();
+
+            // Get the database context and apply migrations automatically and seed the database
+            using (var scope = app.Services.CreateScope())
+            {
+                var scopedServices = scope.ServiceProvider;
+                var dbContext = scopedServices.GetRequiredService<GraafschapCollegeDbContext>();
+                dbContext.Database.Migrate();
+                dbContext.Seed();
+            }
 
             app.Run();
         }
