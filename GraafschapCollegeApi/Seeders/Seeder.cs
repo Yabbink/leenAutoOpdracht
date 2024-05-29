@@ -5,8 +5,8 @@
     {
         public static void Seed(this GraafschapCollegeDbContext dbContext)
         {
-            UserSeeder.Seed(dbContext);
             RoleSeeder.Seed(dbContext);
+            UserSeeder.Seed(dbContext);
         }
     }
 }
