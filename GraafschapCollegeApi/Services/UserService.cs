@@ -1,114 +1,112 @@
-﻿using GraafschapCollege.Shared.Requests;
-using GraafschapCollege.Shared.Responses;
+﻿namespace GraafschapCollegeApi.Services;
+
 using GraafschapCollegeApi.Context;
 using GraafschapCollegeApi.Entities;
+using GraafschapCollege.Shared.Requests;
+using GraafschapCollege.Shared.Responses;
+using System;
 
-namespace GraafschapCollegeApi.Services
+public class UserService(GraafschapCollegeDbContext dbContext)
 {
-    public class UserService(GraafschapCollegeDbContext dbContext)
+    public IEnumerable<UserResponse> GetUsers()
     {
-        public IEnumerable<UserResponse> GetUsers()
+        return dbContext.Users.Select(x => new UserResponse
         {
-            return dbContext.Users.Select(x => new UserResponse
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Email = x.Email
-            });
+            Id = x.Id,
+            Name = x.Name,
+            Email = x.Email
+        });
+    }
+
+    public UserResponse? GetUserById(int id)
+    {
+        var user = dbContext.Users.Find(id);
+
+        if (user == null)
+        {
+            return null;
         }
 
-        public UserResponse? GetUserById(int id)
+        return new UserResponse
         {
-            var user = dbContext.Users.Find(id);
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email
+        };
+    }
 
-            if (user == null)
-            {
-                return null;
-            }
+    public UserResponse CreateUser(CreateUserRequest request)
+    {
+        var existingUser = dbContext.Users
+            .SingleOrDefault(x => x.Email == request.Email);
 
-            return new UserResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
+        if (existingUser != null)
+        {
+            throw new Exception("User already exists");
         }
 
-        public UserResponse CreateUser(CreateUserRequest request)
+        var roles = dbContext.Roles
+            .Where(x => request.Roles.Contains(x.Id))
+            .ToList();
+
+        var user = new User
         {
-            var existingUser = dbContext.Users
-                .SingleOrDefault(x => x.Email == request.Email);
+            Name = request.Name,
+            Email = request.Email,
+            Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+            Roles = roles
+        };
 
-            if (existingUser != null)
-            {
-                // This should be a custom exception but for now we'll just throw a regular one.
-                // Best case scenario is to create a Result object that contains error messages or a success flag.
-                throw new Exception("User already exists");
-            }
+        dbContext.Users.Add(user);
+        dbContext.SaveChanges();
 
-            var roles = dbContext.Roles
-                .Where(x => request.Roles.Contains(x.Id))
-                .ToList();
+        return new UserResponse
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email
+        };
+    }
 
-            var user = new User
-            {
-                Name = request.Name,
-                Email = request.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                Roles = roles
-            };
+    public UserResponse? UpdateUser(int id, UpdateUserRequest request)
+    {
+        var user = dbContext.Users.Find(id);
 
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
-
-            return new UserResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
+        if (user == null)
+        {
+            return null;
         }
 
-        public UserResponse? UpdateUser(int id, UpdateUserRequest request)
+        user.Name = request.Name;
+        user.Email = request.Email;
+
+        dbContext.SaveChanges();
+
+        return new UserResponse
         {
-            var user = dbContext.Users.Find(id);
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email
+        };
+    }
 
-            if (user == null)
-            {
-                return null;
-            }
+    public UserResponse? DeleteUser(int id)
+    {
+        var user = dbContext.Users.Find(id);
 
-            user.Name = request.Name;
-            user.Email = request.Email;
-
-            dbContext.SaveChanges();
-
-            return new UserResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
+        if (user == null)
+        {
+            return null;
         }
 
-        public UserResponse? DeleteUser(int id)
+        dbContext.Users.Remove(user);
+        dbContext.SaveChanges();
+
+        return new UserResponse
         {
-            var user = dbContext.Users.Find(id);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            dbContext.Users.Remove(user);
-            dbContext.SaveChanges();
-
-            return new UserResponse
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email
-            };
-        }
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email
+        };
     }
 }

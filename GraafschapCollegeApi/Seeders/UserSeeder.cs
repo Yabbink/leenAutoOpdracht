@@ -40,6 +40,5 @@ namespace GraafschapCollegeApi.Seeders
             dbContext.Users.AddRange(usersToAdd);
             dbContext.SaveChanges();
         }
-
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GraafschapCollegeApi.Migrations
 {
     [DbContext(typeof(GraafschapCollegeDbContext))]
-    [Migration("20240529090131_CreateRoles")]
-    partial class CreateRoles
+    [Migration("20240529110058_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
