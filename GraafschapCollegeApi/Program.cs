@@ -34,8 +34,8 @@ namespace GraafschapCollegeApi
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
-            {
                 {
+                  {
                     new OpenApiSecurityScheme
                     {
                         Reference = new OpenApiReference
@@ -45,7 +45,7 @@ namespace GraafschapCollegeApi
                         }
                     },
                     Array.Empty<string>()
-                }
+                  }
             });
             });
 
