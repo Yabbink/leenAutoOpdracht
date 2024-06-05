@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraafschapCollege.Shared.Options
 {
-    public class JwtTokens
+    public class JwtOptions
     {
         public const string SectionName = "Jwt";
         public string Key { get; set; } = default!;

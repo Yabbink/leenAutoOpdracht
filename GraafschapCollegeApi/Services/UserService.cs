@@ -5,8 +5,10 @@ using GraafschapCollegeApi.Entities;
 using GraafschapCollege.Shared.Requests;
 using GraafschapCollege.Shared.Responses;
 using System;
+using GraafschapCollege.Shared.Interfaces;
+using GraafschapCollege.Shared.Constants;
 
-public class UserService(GraafschapCollegeDbContext dbContext)
+public class UserService(GraafschapCollegeDbContext dbContext, ICurrentUserContext userContext)
 {
     public IEnumerable<UserResponse> GetUsers()
     {
@@ -20,6 +22,11 @@ public class UserService(GraafschapCollegeDbContext dbContext)
 
     public UserResponse? GetUserById(int id)
     {
+        if (userContext.IsInRole(Roles.Employee))
+        {
+            id = userContext.User.Id;
+        }
+
         var user = dbContext.Users.Find(id);
 
         if (user == null)
@@ -37,12 +44,15 @@ public class UserService(GraafschapCollegeDbContext dbContext)
 
     public UserResponse CreateUser(CreateUserRequest request)
     {
+        var response = new UserResponse();
+
         var existingUser = dbContext.Users
             .SingleOrDefault(x => x.Email == request.Email);
 
         if (existingUser != null)
         {
-            throw new Exception("User already exists");
+            response.Errors.Add("User already exists");
+            return response;
         }
 
         var roles = dbContext.Roles

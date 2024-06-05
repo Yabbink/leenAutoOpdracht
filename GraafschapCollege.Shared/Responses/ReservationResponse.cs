@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraafschapCollege.Shared.Responses
 {
-    public class ReservationResponse
+    public class ReservationResponse : BaseResponse
     {
         public int Id { get; set; }
         public DateTime From { get; set; }

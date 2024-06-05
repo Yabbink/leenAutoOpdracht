@@ -1,3 +1,6 @@
+using GraafschapCollege.Shared.Constants;
+using GraafschapCollege.Shared.Interfaces;
+using GraafschapCollege.Shared.Options;
 using GraafschapCollegeApi.Context;
 using GraafschapCollegeApi.Seeders;
 using GraafschapCollegeApi.Services;
@@ -7,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace GraafschapCollegeApi
@@ -30,12 +34,14 @@ namespace GraafschapCollegeApi
                     In = ParameterLocation.Header,
                     Description = "Please insert JWT with Bearer into field",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
                 });
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
                 {
-                  {
                     new OpenApiSecurityScheme
                     {
                         Reference = new OpenApiReference
@@ -45,7 +51,7 @@ namespace GraafschapCollegeApi
                         }
                     },
                     Array.Empty<string>()
-                  }
+                }
             });
             });
 
@@ -53,6 +59,9 @@ namespace GraafschapCollegeApi
             services.AddTransient<UserService>();
             services.AddTransient<AuthService>();
             services.AddTransient<TokenService>();
+            services.AddTransient<ReservationService>();
+            services.AddTransient<VehicleService>();
+            services.AddScoped<ICurrentUserContext, CurrentUserContext>();
 
             // Add database context
             services.AddDbContext<GraafschapCollegeDbContext>(options =>
@@ -61,29 +70,52 @@ namespace GraafschapCollegeApi
                 options.UseSqlite("Data Source=GraafschapCollege.db;");
             });
 
+            // Add options pattern to the configuration
+            services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
+
             // Add authentication for JWT
+            // Disable the default claim type mapping
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    // Get the IOptions from from services
+                    var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()!;
+
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                        ValidAudience = builder.Configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
-                        ClockSkew = TimeSpan.Zero
+                        ValidIssuer = jwtOptions.Issuer,
+                        ValidAudience = jwtOptions.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
+                        ClockSkew = TimeSpan.Zero,
+                        NameClaimType = Claims.Name,
+                        RoleClaimType = Claims.Role,
                     };
+
+                    // Disable the default claim type mapping to avoid mapping "sub" to ClaimTypes.NameIdentifier.
+                    options.MapInboundClaims = false;
                 });
 
+            // Add http context accessor
+            services.AddHttpContextAccessor();
+
             // Add authorization policy for JWT
-            services.AddAuthorizationBuilder()
-                .SetFallbackPolicy(new AuthorizationPolicyBuilder()
-                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                .RequireAuthenticatedUser()
-                .Build());
+            services.AddAuthorization();
+
+            // Add CORS policy
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             var app = builder.Build();
 
@@ -93,6 +125,9 @@ namespace GraafschapCollegeApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            // Add CORS policy
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
