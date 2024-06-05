@@ -3,55 +3,22 @@
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<h1>Reserveren</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Hier kunt u de auto reserveren.</p>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<form>
+    <label>Username: *</label>
+    <input type="text" name="username" class="username" id="username" placeholder="Username..." required />
+    <br />
+    <label>Datum wanneer*</label>
+    <input type="date" name="date" class="date" id="date" placeholder="dd/mm/yy" required />
+    <br />
+    <label>Adres van klant</label>
+    <input type="text" name="adress" class="adress" id="adress" placeholder="Adres van klant..." required />
+    <br />
+    <input type="text" name="adress2" class="adres2s" id="adress2" placeholder="Adres van klant 2..." />
+    <br />
+    <input type="submit" name="login" value="Login" />
+</form>
 
-@code {
-    private WeatherForecast[]? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
-
-    public class WeatherForecast
-    {
-        public DateOnly Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-}
