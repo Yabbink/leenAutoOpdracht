@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GraafschapCollegeApi.Controllers
 {
+    [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/users")]
     public class UserController(UserService userService) : ControllerBase
     {
         [HttpGet]

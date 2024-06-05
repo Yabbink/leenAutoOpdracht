@@ -5,7 +5,7 @@ using System.Data;
 
 namespace GraafschapCollegeApi.Seeders
 {
-    public class RoleSeeder
+    public static class RoleSeeder
     {
         public static void Seed(GraafschapCollegeDbContext dbContext)
         {
@@ -15,8 +15,8 @@ namespace GraafschapCollegeApi.Seeders
 
             var roles = new List<Role>
             {
-            new() { Name = Roles.Administrator },
-            new() { Name = Roles.Employee }
+                new() { Name = Roles.Administrator },
+                new() { Name = Roles.Employee }
             };
 
             var rolesToAdd = roles

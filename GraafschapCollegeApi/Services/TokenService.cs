@@ -13,11 +13,11 @@ namespace GraafschapCollegeApi
         public string CreateToken(User user)
         {
             var claims = new List<Claim>
-        {
-            new("id", user.Id.ToString()),
-            new("name", user.Name),
-            new("email", user.Email),
-        };
+            {
+                new("id", user.Id.ToString()),
+                new("name", user.Name),
+                new("email", user.Email),
+            };
 
             claims.AddRange(user.Roles.Select(role => new Claim("role", role.Name)));
 
