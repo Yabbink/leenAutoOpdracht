@@ -25,7 +25,7 @@ namespace GraafschapCollegeApi.Seeders
                     Roles = new List<Role> { roles.Find(x => x.Name == Roles.Administrator)! }
                 },
                 new()
-                {
+                {  
                     Name = "John Doe",
                     Email = "j.doe@example.com",
                     Password = BCrypt.Net.BCrypt.HashPassword("Password123!"),
