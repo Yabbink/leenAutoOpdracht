@@ -2,17 +2,20 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<h1>Overzicht</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p>Hier kan je alle gegevens zien</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-}
+<table>
+    <tr>
+        <th>Reserveer Id</th>
+        <th>Naam</th>
+        <th>Datum</th>
+        <th>Adres 1</th>
+        <th>Adres 2</th>
+        <th>Kilometerstand begin</th>
+        <th>Kilometerstand na rit</th>
+        <th>Verzoek accepteren</th>
+        <th>Verzoek weigeren</th>
+    </tr>
+</table>
