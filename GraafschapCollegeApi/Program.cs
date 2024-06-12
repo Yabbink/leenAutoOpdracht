@@ -66,8 +66,8 @@ namespace GraafschapCollegeApi
             // Add database context
             services.AddDbContext<GraafschapCollegeDbContext>(options =>
             {
-                var a = builder.Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlite("Data Source=GraafschapCollege.db;");
+                //var a = builder.Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
 
             // Add options pattern to the configuration
