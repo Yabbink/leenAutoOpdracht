@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraafschapCollegeApi", "Gra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraafschapCollege.Shared", "GraafschapCollege.Shared\GraafschapCollege.Shared.csproj", "{73EB8C9D-FC21-40D4-91A4-031AE19E195F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraafschapCollege.BlazorApp", "GraafschapCollege.BlazorApp\GraafschapCollege.BlazorApp.csproj", "{1FC9E1DE-FF30-4C9B-9384-66694BB42CEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraafschapCollege.BlazorApp", "GraafschapCollege.BlazorApp\GraafschapCollege.BlazorApp.csproj", "{1FC9E1DE-FF30-4C9B-9384-66694BB42CEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
