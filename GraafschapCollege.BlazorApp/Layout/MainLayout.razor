@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿﻿@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,7 +8,26 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <AuthorizeView>
+                <Authorized>
+                    <div>
+                        Welcome! @AuthState.User.Name
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle ms-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Roles
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach (var role in AuthState.User.Roles)
+                            {
+                                <li class="dropdown-item">@role</li>
+                            }
+                        </ul>
+                    </div>
+
+                    <a href="#" @onclick=(Logout) class="btn btn-primary">Logout</a>
+                </Authorized>
+            </AuthorizeView>
         </div>
 
         <article class="content px-4">

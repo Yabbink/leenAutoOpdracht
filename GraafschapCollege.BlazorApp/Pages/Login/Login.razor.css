@@ -1,0 +1,9 @@
+﻿.form-login {
+    max-width: 330px;
+    max-height: 330px;
+    padding: 1rem;
+}
+
+.login-alignment {
+    height: calc(100vh - 4.6rem);
+}

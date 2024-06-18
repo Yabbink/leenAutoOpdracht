@@ -1,4 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿    <Content Remove="Pages\Home.razor" />
+    <Compile Include="Pages\Home.razor" />
+</Project><Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,8 +9,41 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.5" PrivateAssets="all" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
   </ItemGroup>
 
-</Project>
+  <ItemGroup>
+    <ProjectReference Include="..\GraafschapCollege.Shared\GraafschapCollege.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.5" PrivateAssets="all" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.1.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\GraafschapCollege.Shared\GraafschapCollege.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="wwwroot\appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	
