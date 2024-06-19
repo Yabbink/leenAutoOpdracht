@@ -1,0 +1,82 @@
+﻿﻿<PageTitle>Reservation</PageTitle>
+<PageHeader Size="PageHeader.Sizes.H2">Create reservation</PageHeader>
+
+@if(isLoading)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="Request" OnValidSubmit="CreateReservationAsync">
+        @if(Errors.Any())
+        {
+            <ul class="validation-errors">
+                @foreach (var error in Errors)
+                {
+                    <li class="validation-message">@error</li>
+                }
+            </ul>
+        }
+
+        <div class="row pb-2">
+            <div class="form-floating">
+                <InputSelect class="form-select" @bind-Value="Request.VehicleId">
+                    <option value="0">Select a vehicle</option>
+
+                    @foreach (var vehicle in Vehicles)
+                    {
+                        <option value="@vehicle.Id">@vehicle.Brand @vehicle.Model</option>
+                    }
+                </InputSelect>
+                <label for="vehicle">Vehicle</label>
+            </div>
+        </div>
+
+        <div class="row pb-2">
+            <div class="col-md-6">
+                <div class="row">
+                    <p>From date and time:</p>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <InputDate id="from" class="form-control" @bind-Value="Request.From" placeholder="From" />
+                            <label for="from">From</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="time" id="fromDate" class="form-control" @bind="Request.From" />
+                            <label for="fromDate">Time</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="row">
+                    <p>Until date and time:</p>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <InputDate id="until" class="form-control" @bind-Value="Request.Until" placeholder="Until" />
+                            <label for="until">Until</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="time" id="eventTime" class="form-control" @bind="Request.Until" />
+                            <label for="untilTime">Time</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col align-self-end">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </EditForm>
+}

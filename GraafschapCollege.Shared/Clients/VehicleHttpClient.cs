@@ -1,12 +1,7 @@
 ﻿using GraafschapCollege.Shared.Options;
+using GraafschapCollege.Shared.Responses;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using static GraafschapCollege.Shared.Responses.ReservationResponse;
 
 namespace GraafschapCollege.Shared.Clients
 {

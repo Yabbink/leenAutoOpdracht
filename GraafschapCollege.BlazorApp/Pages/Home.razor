@@ -1,15 +1,42 @@
-﻿@page "/"
+﻿﻿<PageTitle>Home</PageTitle>
 
-<PageTitle>Home</PageTitle>
+<div class="d-flex justify-content-between">
+    <PageHeader Size="PageHeader.Sizes.H2">Reservations</PageHeader>
 
-<h1>Login</h1>
+    <button @onclick="GotoReservation" class="btn btn-primary ml-auto">
+        Add reservation
+    </button>
+</div>
 
-<form>
-    <label>Username: *</label>
-    <input type="text" name="username" class="username" id="username" placeholder="Username..." required />
-        <br />
-    <label>Password: *</label>
-    <input type="password" name="password" class="password" id="password" placeholder="Password..." required />
-    <br />
-    <input type="submit" name="login" value="Login" />
-</form>
+<p>All reservations</p>
+
+@if (Reservations == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Vehicle</th>
+                <th>From</th>
+                <th>Until</th>
+                <th>By</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in Reservations)
+            {
+                <tr>
+                    <td>@reservation.Id</td>
+                    <td>@reservation.Vehicle.Brand @reservation.Vehicle.Model</td>
+                    <td>@reservation.From.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td>@reservation.Until.ToString("dd-MM-yyyy HH:mm")</td>
+                    <td>@reservation.User.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
