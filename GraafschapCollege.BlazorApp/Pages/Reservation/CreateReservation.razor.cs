@@ -28,7 +28,7 @@ public partial class CreateReservation
 
     protected override async Task OnInitializedAsync()
     {
-        Vehicles = (IEnumerable<VehicleResponse>)await VehicleHttpClient.GetVehiclesAsync();
+        Vehicles = await VehicleHttpClient.GetVehiclesAsync();
 
         Request.VehicleId = 0;
         Request.From = DateTime.Now;

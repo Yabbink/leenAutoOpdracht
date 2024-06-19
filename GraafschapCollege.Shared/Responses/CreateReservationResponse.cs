@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraafschapCollege.Shared.Responses
 {
-    public class CreateReservationResponse
+    public class CreateReservationResponse : BaseResponse
     {
 
     }
