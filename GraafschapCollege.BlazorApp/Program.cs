@@ -43,7 +43,6 @@ public static class Program
         builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<GraafschapCollegeAuthenticationStateProvider>());
         builder.Services.AddAuthorizationCore();
 
-
         await builder.Build().RunAsync();
     }
 }
