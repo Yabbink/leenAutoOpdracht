@@ -1,6 +1,5 @@
 ﻿namespace GraafschapCollege.BlazorApp.Handlers;
 using GraafschapCollege.BlazorApp.Services;
-
 using System.Net.Http.Headers;
 
 public class AuthorizationMessageHandler(LocalStorageService localStorageService) : DelegatingHandler
