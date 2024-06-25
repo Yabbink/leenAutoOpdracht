@@ -5,7 +5,6 @@ using GraafschapCollege.BlazorApp.Services;
 using GraafschapCollege.BlazorApp.State;
 using GraafschapCollege.Shared.Clients;
 using GraafschapCollege.Shared.Options;
-
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -42,6 +41,7 @@ public static class Program
         builder.Services.AddScoped<GraafschapCollegeAuthenticationStateProvider>();
         builder.Services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<GraafschapCollegeAuthenticationStateProvider>());
         builder.Services.AddAuthorizationCore();
+
 
         await builder.Build().RunAsync();
     }

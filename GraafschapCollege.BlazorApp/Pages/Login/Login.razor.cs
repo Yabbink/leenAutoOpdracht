@@ -6,6 +6,7 @@ using GraafschapCollege.Shared.Requests;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using System.Net.Http;
 
 [AllowAnonymous]
 [Route("/login")]
@@ -27,16 +28,23 @@ public partial class Login
 
     private async Task LoginAsync()
     {
-        var response = await AuthHttpClient.LoginAsync(Request);
-
-        if (response is null)
+        try
         {
-            return;
+            var response = await AuthHttpClient.LoginAsync(Request);
+
+            if (response is null)
+            {
+                return;
+            }
+
+            await LocalStorageService.SetItemAsync("token", response.Token);
+            await AuthState.GetAuthenticationStateAsync();
+
+            NavigationManager.NavigateTo("/");
         }
-
-        await LocalStorageService.SetItemAsync("token", response.Token);
-        await AuthState.GetAuthenticationStateAsync();
-
-        NavigationManager.NavigateTo("/");
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error during login: {ex.Message}");
+        }
     }
 }

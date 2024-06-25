@@ -3,9 +3,7 @@
 using GraafschapCollege.BlazorApp.Services;
 using GraafschapCollege.Shared.Constants;
 using GraafschapCollege.Shared.Interfaces;
-
 using Microsoft.AspNetCore.Components.Authorization;
-
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 

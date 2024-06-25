@@ -6,7 +6,7 @@ using GraafschapCollege.Shared.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
-[Authorize]
+//[Authorize]
 [Route("/")]
 public partial class Home
 {
